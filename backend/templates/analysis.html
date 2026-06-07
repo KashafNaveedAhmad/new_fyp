@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ARTIFY-Analysis Page</title>
+    
+    <link rel="icon" type="image/x-icon" href="../../art-gallery/icon/1.png">
+    <link rel="stylesheet" href="../../style1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+            body {
+            font-family: 'Times New Roman', Times, serif;}
+.upload-box {
+    width: 60%;
+    margin: auto;
+    padding: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 150px;
+    text-align: center;
+}
+.upload-box h2{
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+
+
+}
+img {
+    max-width: 300px;
+    margin-top: 20px;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+.results-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center; /* Changed from left to center */
+}
+
+/* Centers the bullet list inside the card while keeping the text left-aligned inside the list */
+.results-card ul {
+    display: inline-block;
+    text-align: left;
+    padding-left: 0;
+}
+
+.heatmap-img { 
+    display: block;
+    margin: 20px auto 0 auto; /* Centers block-level images natively */
+    border: 3px solid #e7e73c; 
+}
+.intro-text {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="color:#ffffff;padding-left: 40px;"><strong> ARTIFY </strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex flex-row">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#museum">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#about">About</a></li>
+                    <li class="nav-item">
+                    <li class="nav-item"><a class="nav-link" href="analysis.html">Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</head>
+<body>
+
+<div class="upload-box">
+<h2>Artwork Emotion Recognition </h2>
+<p class="intro-text">
+Welcome to the Artwork 5-Emotion Recognition System, Upload an artwork to receive
+emotion predictions, confidence percentages, and an explanation of the visual
+features that influenced the result.
+</p>
+<br>
+<input style="background-color: #000000; color: white; border: none;  margin-top: 10px;padding: 10px 20px; cursor: pointer;"type="file" id="imageInput"><br><br>
+<button style="background-color: #000000; color: white; border: none; margin-top: 20px; padding: 10px 20px; cursor: pointer;" onclick="uploadImage()"> 🔍︎ Analyze Artwork</button>
+<br>
+<img id="preview" src="" style="display:none;">
+<div id="result"></div>
+
+</div>
+
+<script>
+document.getElementById("imageInput").onchange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const preview = document.getElementById("preview");
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "inline-block";
+    }
+};
+
+function uploadImage() {
+    const file = document.getElementById("imageInput").files[0];
+    if (!file) return alert("Select an image asset file.");
+
+    let formData = new FormData();
+    formData.append("image", file);
+    document.getElementById("result").innerHTML = "<p>Processing artwork features...</p>";
+
+    fetch("http://127.0.0.1:5000/analyze", {
+        method: "POST",
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        let heatmapHTML = data.gradcam 
+            ? `<h4>Grad-CAM Explainable AI Heatmap</h4><img class="heatmap-img" src="${data.gradcam}?t=${new Date().getTime()}">` 
+            : `<p style="color:orange;">XAI Layer skipped.</p>`;
+
+        document.getElementById("result").innerHTML = `
+            <div class="results-card">
+                <h3>Prediction: ${data.prediction}</h3>
+                <p><strong>Confidence:</strong> ${data.confidence}%</p>
+                <p><strong>Reasoning Analysis:</strong> ${data.reason}</p>
+                <h4>Probability Array Distribution</h4>
+                <ul>
+                    <li>Joy: ${data.scores.Joy || 0}%</li>
+                    <li>Sadness: ${data.scores.Sadness || 0}%</li>
+                    <li>Calmness: ${data.scores.Calmness || 0}%</li>
+                    <li>Anger: ${data.scores.Anger || 0}%</li>
+                    <li>Fear: ${data.scores.Fear || 0}%</li>
+                </ul>
+                <hr>
+                ${heatmapHTML}
+            </div>
+        `;
+    })
+    .catch(err => {
+        document.getElementById("result").innerHTML = "<p style='color:red;'>Backend communication exception error.</p>";
+    });
+}
+</script><br><br><br><br><br><br><br><br><br>    
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h4> ARTIFY </h4>
+          <p class="tagline">Where Emotion Meets Expression</p>
+          <p class="desc">
+            A curated digital space showcasing artistic narratives through form, texture, and imagination.
+          </p>
+        </div>
+        <div class="footer-center">
+          <h4>Explore</h4>
+          <a href="index.html #about">About</a>
+          <a href="backend\templates\analysis.html">Emotion Analysis</a>
+          <a href="index.html #museum">Category</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-right">
+          <h4>Get In Touch</h4>
+          <p>Email: gallery@artspace.com</p>
+          <p>Location: AI-Powered Art Analysis Platform</p>
+          <p class="cta">Experience Art. Feel the Story.</p>
+        </div>
+      </div>
+      <p class="footer-bottom">
+        © 2026 ARTIFY — Crafted for Artistic Experience
+      </p>
+    </footer> 
+</body>
+</html>

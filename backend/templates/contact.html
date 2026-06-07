@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ARTIFY-Analysis Page</title>
+    <link rel="icon" type="image/x-icon" href="../../art-gallery/icon/1.png">
+    <link rel="stylesheet" href="../../style1.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="color:#ffffff;padding-left: 40px;"><strong> ARTIFY </strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex flex-row">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#museum">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analysis.html">Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<style> 
+body{
+    font-family:'Times New Roman', Times, serif;
+}
+</style>
+
+<section class="contact-section">
+        <div class="contact-container">
+            <h1>Contact Us</h1>
+            <p class="intro text-center mb-4">
+                We'd love to hear from you. Whether you have questions about our
+                artwork collection, exhibitions, orders, or simply wish to share your feedback.
+            </p>
+
+            <form id="contactForm">
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="type" id="email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="3" required></textarea>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const submitButton = document.querySelector('#contactForm button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        try {
+            const response = await fetch("http://127.0.0.1:5000/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert("Message submitted successfully! 🎉");
+                document.getElementById("contactForm").reset();
+            } else {
+                alert("Error: " + data.error);
+            }
+        } catch (error) {
+            alert("Unable to communicate with the backend server.");
+            console.error(error);
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Message";
+        }
+    });
+    </script>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h4> ARTIFY </h4>
+          <p class="tagline">Where Emotion Meets Expression</p>
+          <p class="desc">
+            A curated digital space showcasing artistic narratives through form, texture, and imagination.
+          </p>
+        </div>
+        <div class="footer-center">
+          <h4>Explore</h4>
+          <a href="index.html #about">About</a>
+          <a href="backend\templates\analysis.html">Emotion Analysis</a>
+          <a href="index.html #museum">Category</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-right">
+          <h4>Get In Touch</h4>
+          <p>Email: gallery@artspace.com</p>
+          <p>Location: AI-Powered Art Analysis Platform</p>
+          <p class="cta">Experience Art. Feel the Story.</p>
+        </div>
+      </div>
+      <p class="footer-bottom">
+        © 2026 ARTIFY — Crafted for Artistic Experience
+      </p>
+    </footer> 
+</body>
+</html>
