@@ -1,0 +1,232 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: rgb(255, 250, 192);
+    text-align: center;
+    background: 
+        url('art-gallery/Background-photos/fl.jpg') no-repeat center center fixed;
+
+    background-size: cover;
+    z-index: 1;
+    overflow-x: hidden;
+    position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background: radial-gradient(
+        circle at center,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.8) 100%
+    );
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+.navbar,
+.container,
+.card,
+.art-pieces-section,
+.footer {
+    position: relative;
+    z-index: 2;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Transparent black background */
+    color: rgba(0, 0, 0, 0.166);
+    padding: 5px 0; /* Reduced top and bottom padding */
+    z-index: 10; /* Keeps the navbar on top */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.navbar-brand {
+    
+    color: #ffffff;
+    font:size 15px;
+    text-decoration: none;
+    padding-left: 15px; /* Reduced padding */
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    gap: 15px; /* Reduced gap between nav items */
+}
+
+.navbar-nav a {
+    color: white;
+    text-decoration: none;
+    font-size:medium;}
+
+.navbar-nav a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+    text-shadow: 0 0 10px #fdffd9, 0 0 20px #fcffb9, 0 0 30px #f4ffc4;
+}
+.home-page .navbar {
+    position: fixed;
+    top: 0;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 100%;
+    background-color: rgb(73, 74, 73);
+    background: rgba(0, 0, 0, 0.7); /* Transparent black background */
+    color: rgb(255, 255, 255);
+    padding: 10px 0; /* Reduced top and bottom padding */
+    z-index: 8; /* Keeps the navbar on top */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.title-box {
+    display: inline-block;
+    padding: 15px 30px;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.747);
+    color: #e61e1efd;
+    font-weight: bolder;
+    text-shadow: 0 0 10px rgba(191, 23, 23, 0.99);
+}
+
+.card {
+    margin-top: 20px;
+    gap: 0px;
+    height: 18rem;
+    padding-top: 5px; 
+    width: 18rem;
+    margin-bottom: 15px; /* Reduced space between cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card-body {
+    color: #ffffff;
+    padding-left: 10px;
+    padding: 20px; /* Reduced padding */
+    padding-top: 20px;
+}
+
+.card-title {
+
+    color: rgb(240, 240, 235) !important;
+    margin-top: 0;
+}
+.card-title h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.card-text{
+    color: rgb(227, 225, 223);
+    border-color: black;
+    font-size:medium;
+    width: 18rem;
+}
+.card-textt{
+    color: rgb(238, 238, 238);
+    border-color: black;
+    font-size:medium;
+    width: 18rem;
+}
+.card-img-top {
+    height: 170px;
+    object-fit: cover;
+}
+
+.art-pieces-section {
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 30px; /* Reduced padding */
+    gap: 15px; /* Reduced gap */
+}
+
+.footer {
+  background: linear-gradient(180deg, #000000);
+  color: #efcb56;
+  font-family: 'Playfair Display', serif;
+  height:min-content;
+  margin: 0;
+  padding: 10px 7%;   /* reduce this value */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer h4 {
+  font-size: 25 px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: #e8c263;
+}
+
+.footer p,
+.footer a {
+  font-size: 16px;
+  color: #cfcfcf;
+  text-decoration: none;
+  line-height: 1.8;
+}
+
+.footer a:hover {
+  color: #d4af37;
+  transition: 0.3s;
+}
+
+
+.tagline {
+  font-style: italic;
+  color: #e6c15a;
+}
+
+.desc {
+  max-width: 280px;
+  opacity: 0.8;
+}
+
+
+.footer-center a {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cta {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #e6c15a;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 12px;
+  color: #888;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  padding-top: 20px;
+}
+

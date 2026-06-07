@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Your Order</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="art-gallery/icon/1.png">
+
+    <style>
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background: url("art-gallery/Background-photos/11.png") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1.page-title {
+            color: white;
+        }
+
+        #selectedArtworkDisplay {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        #selectedArtworkDisplay img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="color:#fff0be; padding-left: 40px;"><strong> ARTIFY </strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex flex-row">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#museum">Art Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="backend\templates\analysis.html">Analysis</a>
+                    </li>
+                     <li class="nav-item"><a class="nav-link" href="backend\templates\contact.html">Contact Us</a></li>
+    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<br><br><br>
+
+<div class="container mt-4">
+
+    <h1 class="text-center mb-4 page-title">
+        Place Your Order
+    </h1>
+
+    <!-- ORDER FORM -->
+    <form id="orderForm"
+          class="p-4 rounded shadow mx-auto"
+          style="max-width: 750px; background-color: #36291d; color: #b7a087;">
+
+        <!-- NAME -->
+        <div class="mb-3">
+
+            <label>Name:</label>
+
+            <input type="text"
+                   name="name"
+                   class="form-control"
+                   required>
+
+        </div>
+
+        <!-- ADDRESS -->
+        <div class="mb-3">
+
+            <label>Address:</label>
+
+            <textarea name="address"
+                      class="form-control"
+                      placeholder="Please provide your full address for delivery."
+                      required></textarea>
+
+        </div>
+
+        <!-- PHONE -->
+        <div class="mb-3">
+
+            <label>Phone:</label>
+
+            <input type="tel"
+                   name="phone"
+                   class="form-control"
+                   pattern="[0-9]{11}"
+                   placeholder="03XXXXXXXXX"
+                   title="Phone number must contain exactly 11 digits"
+                   required>
+
+        </div>
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+
+            <label>Email:</label>
+
+            <input type="email"
+                   name="email"
+                   class="form-control"
+                   placeholder="example@email.com"
+                   required>
+
+        </div>
+
+        <!-- ARTWORK DISPLAY -->
+        <div class="mb-3">
+
+            <label>Artwork:</label>
+
+            <div id="selectedArtworkDisplay">
+
+                <img id="selectedArtworkImg" src="" alt="">
+
+                <span id="selectedArtworkName"
+                      style="font-weight:bold;">
+                </span>
+
+            </div>
+
+            <input type="hidden"
+                   name="artwork"
+                   id="artworkInput"
+                   required>
+
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit"
+                class="btn w-100"
+                style="background-color: #0b0602; color: rgb(237, 237, 237); border: 1px solid #332417;">
+
+            Place Order
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+  const artworks = {
+    // ---------------- FLOWERS (100s) ----------------
+    101: {name: "White Rose", img: "art-gallery/flowers/8.png"},
+    102: {name: "Pink Rose", img: "art-gallery/flowers/7.jpg"},
+    103: {name: "Red Rose", img: "art-gallery/flowers/9.jpg"},
+    104: {name: "Rose on Water", img: "art-gallery/flowers/3.jpg"},
+    105: {name: "Lavenders", img: "art-gallery/flowers/6.jpeg"},
+    106: {name: "Bouquet", img: "art-gallery/flowers/2.jpg"},
+    107: {name: "Golden Blossom", img: "art-gallery/flowers/n0.jpg"},
+    108: {name: "White Lilies", img: "art-gallery/flowers/n1.jpg"},
+    109: {name: "Spring Bouquet", img: "art-gallery/flowers/n2.jpg"},
+    110: {name: "Blue & White Bouquet", img: "art-gallery/flowers/n3.jpg"},
+    111: {name: "Golden Sunflowers", img: "art-gallery/flowers/n4.jpg"},
+
+    // ---------------- SCULPTURES & MIXED (200s) ----------------
+    201: {name: "Child Bride", img: "art-gallery/sculpture/1.png"},
+    202: {name: "The Fishmens Daughter", img: "art-gallery/sculpture/2.png"},
+    203: {name: "Einstein", img: "art-gallery/sculpture/3.png"},
+    204: {name: "Fox", img: "art-gallery/sculpture/11.png"},
+    205: {name: "Raven", img: "art-gallery/sculpture/13.png"},
+    206: {name: "Wolf Statue", img: "art-gallery/sculpture/4.png"},
+    207: {name: "Squiky", img: "art-gallery/sculpture/5.png"},
+    208: {name: "Prowling Majesty", img: "art-gallery/sculpture/n2.jpg"},
+    209: {name: "Oceanic Harmony", img: "art-gallery/sculpture/n3.jpg"},
+    210: {name: "Forest Crown", img: "art-gallery/sculpture/n4.jpg"},
+    211: {name: "Dragon's Ascent", img: "art-gallery/sculpture/n5.jpg"},
+    212: {name: "Sleeping Bunny", img: "art-gallery/sculpture/m1.png"},
+    213: {name: "King Kong", img: "art-gallery/sculpture/m2.png"},
+    214: {name: "Pernnial Bloom Vase", img: "art-gallery/sculpture/vase2.jpg"},
+    215: {name: "Indigo Bloom Vessel", img: "art-gallery/sculpture/ceramic_vase.jpg"},
+
+    // ---------------- ANIMALS & WILDLIFE (300s) ----------------
+    301: {name: "White Peacock", img: "art-gallery/animal/a.jpg"},
+    302: {name: "White Snake", img: "art-gallery/animal/b.jpg"},
+    303: {name: "Blue Toned Peacock", img: "art-gallery/animal/f.jpg"},
+    304: {name: "Wingbeat", img: "art-gallery/animal/d.jpg"},
+    305: {name: "Eagle", img: "art-gallery/animal/e.jpg"},
+    306: {name: "Wild Horse", img: "art-gallery/animal/h.jpg"},
+    307: {name: "Yin and Yang", img: "art-gallery/animal/j.jpg"},
+    308: {name: "Owl's Aura", img: "art-gallery/animal/i.jpg"},
+    309: {name: "Springtime Confidants", img: "art-gallery/animal/n2.jpg"},
+    310: {name: "Coral Elegance", img: "art-gallery/animal/n6.jpg"},
+    311: {name: "Sovereign Gaze", img: "art-gallery/animal/n3.jpg"},
+    312: {name: "Royal Plumage", img: "art-gallery/animal/n5.jpg"},
+    313: {name: "Vanguard of the Skies", img: "art-gallery/animal/n2.jpg"},
+    314: {name: "Daisy Glen Rest", img: "art-gallery/animal/n1.jpg"},
+
+    // ---------------- PORTRAIT & EXPRESSION (400s) ----------------
+    401: {name: "Blue Eyed Girl", img: "art-gallery/portrait/5.jpg"},
+    402: {name: "Soul", img: "art-gallery/portrait/2.webp"},
+    403: {name: "Peace", img: "art-gallery/portrait/3.jpg"},
+    404: {name: "Mermaid Dreams", img: "art-gallery/portrait/4.jpg"},
+    405: {name: "United Grace", img: "art-gallery/portrait/99.jpg"},
+    406: {name: "Majestic Strength", img: "art-gallery/portrait/1.jpg"},
+    407: {name: "Golden Retriever", img: "art-gallery/portrait/dog2.jpg"},
+    408: {name: "Stream Glen Renaissance", img: "art-gallery/portrait/n5.jpg"},
+    409: {name: "Duality of Vision", img: "art-gallery/portrait/n1.jpg"},
+    410: {name: "Fragmented Mind", img: "art-gallery/portrait/n2.jpg"},
+    411: {name: "Echoes of the Soul", img: "art-gallery/portrait/n3.jpg"},
+    412: {name: "Deconstructed Classic", img: "art-gallery/portrait/n4.jpg"},
+
+    // ---------------- TEXTILE ART (500s) ----------------
+    501: {name: "The Gaze", img: "art-gallery/textile/7.jpg"},
+    502: {name: "Human Heart", img: "art-gallery/textile/1.jpeg"},
+    503: {name: "Lynx", img: "art-gallery/textile/6.jpg"},
+    504: {name: "Deer Head", img: "art-gallery/textile/4.png"},
+    505: {name: "Colors of Sea", img: "art-gallery/textile/5.png"},
+    506: {name: "Foxy", img: "art-gallery/textile/2.png"},
+    507: {name: "A Little Birdy", img: "art-gallery/textile/3.png"},
+    508: {name: "Soaring Embers", img: "art-gallery/textile/8.jpg"},
+    509: {name: "Forest Floor Detritus", img: "art-gallery/textile/9.jpg"},
+    510: {name: "Earth Lines", img: "art-gallery/textile/19.png"},
+    511: {name: "Indigo Swirl", img: "art-gallery/textile/16.jpg"},
+    512: {name: "Midnight Totem", img: "art-gallery/textile/12.jpg"},
+
+    // ---------------- LANDSCAPES & NATURE (600s) ----------------
+    601: {name: "Old Majesty", img: "art-gallery/landscape/4.jpg"},
+    602: {name: "European Magic", img: "art-gallery/landscape/3.jpg"},
+    603: {name: "Beach Day", img: "art-gallery/landscape/6.jpg"},
+    604: {name: "Sandy Beach", img: "art-gallery/landscape/5.jpg"},
+    605: {name: "Autumn River Sanctuary", img: "art-gallery/landscape/7.jpg"},
+    606: {name: "Swan Lake Solitude", img: "art-gallery/landscape/8.jpg"},
+    607: {name: "Verdent Vallery Pass", img: "art-gallery/landscape/n1.jpg"},
+    608: {name: "Emerald Crags", img: "art-gallery/landscape/n2.jpg"},
+    609: {name: "Whispering Valves", img: "art-gallery/landscape/n3.jpg"},
+    610: {name: "The Lonely Beacon", img: "art-gallery/landscape/n4.jpg"},
+
+    // ---------------------- POTTERY (700s) --------------------
+    701: {name: "Liquid Silence", img: "art-gallery/pottery/1.png"},
+    702: {name: "Obsidian Wave", img: "art-gallery/pottery/2.png"},
+    703: {name: "Crackle Melt", img: "art-gallery/pottery/3.png"},
+    704: {name: "Earthen Oval", img: "art-gallery/pottery/4.png"},
+    705: {name: "Biomorphic Family", img: "art-gallery/pottery/5.jpg"},
+    706: {name: "Fingerprint Apex", img: "art-gallery/pottery/6.jpg"},
+    707: {name: "Arbor Luna", img: "art-gallery/pottery/8.jpeg"},
+    708: {name: "Ocean Reed Duo", img: "art-gallery/pottery/9.jpg"},
+    709: {name: "Forest Floor", img: "art-gallery/pottery/11.jpg"},
+    710: {name: "Cerulean Bloom", img: "art-gallery/pottery/12.jpg"},
+    711: {name: "Turquoise Reef Trough", img: "art-gallery/pottery/a.jpg"},
+    712: {name: "Aquatic Spire", img: "art-gallery/pottery/b.jpg"},
+    713: {name: "Coral Frond Vessel", img: "art-gallery/pottery/c.jpg"},
+    714: {name: "Ultramarine Ensemble", img: "art-gallery/pottery/d.jpg"},
+    715: {name: "Scarlet Corsage", img: "art-gallery/pottery/e.jpg"},
+    716: {name: "Sage Ripple", img: "art-gallery/pottery/f.jpg"},
+    717: {name: "The Reverse Trio", img: "art-gallery/pottery/group1.jpg"},
+    718: {name: "Shadow Eclipse", img: "art-gallery/pottery/group2.jpg"},
+    719: {name: "Silent Chrysalis", img: "art-gallery/pottery/group3.jpg"},
+    720: {name: "Oceanic Helix", img:"art-gallery/pottery/Helix Swirl Outdoor Vase - Uttermost.jpg"},
+    721: {name: "Faceted Monolith", img: "art-gallery/pottery/Massimo Micheluzzi (artist).jpg" },
+    722: {name: "Laguna Bowl", img: "art-gallery/pottery/n.jpg"},
+
+    // ---------------- ABSTRACT & RHEOLOGY (800s) ----------------
+    801: {name: "Whirpool Crest", img: "art-gallery/abstract/1.jpg"},
+    802: {name: "Coastal Sediment", img:"art-gallery/abstract/2.jpg"},
+    803: {name: "Neon Chrysalis", img: "art-gallery/abstract/3.jpg"},
+    804: {name: "Mid-century Rheology", img: "art-gallery/abstract/4.jpg"},
+    805: {name: "Kinetic Monsoon", img: "art-gallery/abstract/5.jpg"},
+    806: {name: "Isometric Paradox", img: "art-gallery/abstract/6.jpg"},
+    807: {name: "Olive Molive", img: "art-gallery/abstract/7.jpg"},
+    808: {name: "Mist over Jade", img:"art-gallery/abstract/8.jpg"},
+    809: {name: "Verdent Mosaic", img: "art-gallery/abstract/9(oil).jpg"},
+    810: {name: "Coriolis Currents", img: "art-gallery/abstract/10.jpg"}
+  };
+
+
+
+// PREFILL ARTWORK
+const urlParams = new URLSearchParams(window.location.search);
+
+const selectedCode = urlParams.get('artwork');
+
+if (selectedCode && artworks[selectedCode]) {
+
+    const art = artworks[selectedCode];
+
+    document.getElementById('selectedArtworkName').textContent = art.name;
+
+    document.getElementById('selectedArtworkImg').src = art.img;
+
+    document.getElementById('artworkInput').value = selectedCode;
+}
+
+</script>
+<script>
+document.getElementById("orderForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const confirmOrder = confirm(
+        "Are you sure you want to place this order?\n\nIf 'yes', Click 'okay' and wait for the order to place.\n\nNote: Don't click 'Place Order' Again"
+    );
+
+    if (!confirmOrder) {
+        return;
+    }
+
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+
+    const artworkCode = document.querySelector('[name="artwork"]').value;
+    const artworkName = document.getElementById('selectedArtworkName').textContent;
+
+    // FIXED: Added the address field directly into your form payload payload
+    const formData = {
+        name: document.querySelector('[name="name"]').value,
+        email: document.querySelector('[name="email"]').value,
+        address: document.querySelector('[name="address"]').value, // <-- ADDED THIS
+        artwork: artworkCode + " - " + artworkName,
+        quantity: 1
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+        
+        // Show success message or specific error returned by Flask
+        alert(data.message || data.error);
+
+        // Optional: Redirect home or clear out form fields on clean success
+        if (data.success) {
+            document.getElementById("orderForm").reset();
+        }
+
+    } catch(error) {
+        alert("Something went wrong with the network connection.");
+        console.log(error);
+    } finally {
+        submitButton.disabled = false;
+    }
+});
+</script><br><br><br>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <h4> ARTIFY </h4>
+      <p class="tagline">Where Emotion Meets Expression</p>
+      <p class="desc">
+        A curated digital space showcasing artistic narratives through
+        form, texture, and imagination.
+      </p>
+    </div>
+    <div class="footer-center">
+      <h4>Explore</h4>
+      <a href="index.html #about">About</a>
+      <a href="backend\templates\analysis.html">Emotion Analysis</a>
+      <a href="index.html #museum">Category</a>
+      <a href="backend\templates\contact.html">Contact</a>
+      
+    </div>
+    <div class="footer-right">
+      <h4>Get In Touch</h4>
+      <p>Email: gallery@artspace.com</p>
+      <p>Location: AI-Powered Art Analysis Platform</p>
+      <p class="cta">Experience Art. Feel the Story.</p>
+    </div>
+  </div>
+  <p class="footer-bottom">
+    © 2026 ARTIFY — Crafted for Artistic Experience
+  </p>
+</footer> 
+
+</body>
+</html>
